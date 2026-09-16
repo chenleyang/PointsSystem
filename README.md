@@ -29,7 +29,20 @@ npm run dev
 
 积分流水只追加，不提供直接删改，客户档案编辑不会改动已有流水中的历史名称。金额仅记账，不调用支付服务。CSV 是查看用途，迁移数据请使用 JSON 备份。
 
-## 部署到 Cloudflare（含云端共享）
+## 部署到 Cloudflare（默认无需数据库）
+
+当前 `wrangler.jsonc` 不绑定 D1，也不需要设置共享密钥，可以直接部署网页。
+
+在 Cloudflare 创建 Worker 并连接 GitHub 仓库后填写：
+
+- Project name：`factory-customer-points`（与配置文件保持一致）。
+- Build command：`npm run build`。
+- Deploy command：`npx wrangler deploy`。
+- 生产分支：`main`。构建环境使用 Node.js 22 或更新版本。
+
+点击部署即可。客户管理、积分充值/消耗、文件备份和恢复都可使用，数据保存在各设备自己的浏览器中。云端上传/下载暂不可用，也不会跨设备共享数据。需要转移资料时，在原设备导出 JSON 文件，再在另一设备导入。
+
+## 部署到 Cloudflare（可选：启用云端共享）
 
 推荐使用 **Workers 静态资源 + D1**，页面和 `/api/backup` 在同一域名下，无需单独配置接口地址。Wrangler 部署工具请使用 Node.js 22 或更新版本；本地预览仍支持 Node.js 18。
 
@@ -40,7 +53,7 @@ npx wrangler login
 npx wrangler d1 create factory-points-backups
 ```
 
-2. 将命令返回的 `database_id` 填入 `wrangler.jsonc`，替换 `REPLACE_WITH_YOUR_D1_DATABASE_ID`。
+2. 将 `wrangler.cloud.example.jsonc` 的内容复制到 `wrangler.jsonc`，再将命令返回的 `database_id` 填入其中，替换 `REPLACE_WITH_YOUR_D1_DATABASE_ID`。提交到 GitHub，后续自动部署也会使用此数据库绑定。
 
 3. 初始化数据库表，设置共享密钥，构建并发布：
 
