@@ -1,0 +1,16 @@
+{
+  "name": "factory-customer-points",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/serve.cjs",
+    "build": "node scripts/build.cjs",
+    "check": "node --check app.js",
+    "test": "playwright test",
+    "test:api": "node --test server-tests/api.test.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2"
+  },
+  "type": "module"
+}
