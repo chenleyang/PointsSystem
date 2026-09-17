@@ -5,7 +5,7 @@ async function connect(page,token='test-only-shared-key-2026'){
   await page.getByRole('button',{name:'连接 / 刷新状态'}).click();
   await expect(page.locator('.cloud-status')).not.toContainText('正在连接');
 }
-test('独立设备上传、下载、恢复副本和过期版本拒绝',async({page,browser})=>{
+test.skip('云端共享入口暂时隐藏：独立设备上传、下载、恢复副本和过期版本拒绝',async({page,browser})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('/#backup');
   await connect(page,'wrong-password');
