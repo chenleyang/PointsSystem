@@ -1,7 +1,7 @@
 import { validate } from './validation.mjs';
 import { createCloudSync } from './cloud.js';
 'use strict';
-const LOGIN_KEY='factory-points-authenticated',LOGIN_USER='藝速科技',LOGIN_PASSWORD='yisu88888';
+const LOGIN_KEY='factory-points-authenticated',LOGIN_USER='YISU1688',LOGIN_PASSWORD='yisu88888';
 const loginScreen=document.querySelector('#login-screen');
 if(sessionStorage.getItem(LOGIN_KEY)==='1')loginScreen?.classList.add('hidden');
 document.querySelector('#login-form')?.addEventListener('submit',e=>{e.preventDefault();const form=new FormData(e.currentTarget);if(form.get('username')===LOGIN_USER&&form.get('password')===LOGIN_PASSWORD){sessionStorage.setItem(LOGIN_KEY,'1');loginScreen.classList.add('hidden');document.querySelector('#login-error').textContent='';}else{document.querySelector('#login-error').textContent='账号或密码错误';e.currentTarget.password.value='';e.currentTarget.password.focus();}});
