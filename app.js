@@ -1,6 +1,10 @@
 import { validate } from './validation.mjs';
 import { createCloudSync } from './cloud.js';
 'use strict';
+const LOGIN_KEY='factory-points-authenticated',LOGIN_USER='藝速科技',LOGIN_PASSWORD='yisu88888';
+const loginScreen=document.querySelector('#login-screen');
+if(sessionStorage.getItem(LOGIN_KEY)==='1')loginScreen?.classList.add('hidden');
+document.querySelector('#login-form')?.addEventListener('submit',e=>{e.preventDefault();const form=new FormData(e.currentTarget);if(form.get('username')===LOGIN_USER&&form.get('password')===LOGIN_PASSWORD){sessionStorage.setItem(LOGIN_KEY,'1');loginScreen.classList.add('hidden');document.querySelector('#login-error').textContent='';}else{document.querySelector('#login-error').textContent='账号或密码错误';e.currentTarget.password.value='';e.currentTarget.password.focus();}});
 const KEY = 'factory-points-v1';
 const icons = {customers:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',recharge:'<rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 9h18M12 12v5M9.5 14.5h5M7 2v3"/>',consume:'<path d="M9 3H5v18h14V3h-4M9 2h6v4H9zM8 11h8M8 15h5"/>',ledger:'<path d="M4 3h16v18H4zM8 7h8M8 12h8M8 17h5"/>',packages:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13"/><path d="M12 8C3 8 5 0 9 3l3 5c9 0 7-8 3-5z"/>',categories:'<path d="m8 3-6 4 3 5 3-2v11h8V10l3 2 3-5-6-4c0 4-8 4-8 0z"/>',settings:'<path d="m9 3 1-1h4l1 3 3 1 3 1v4l-2 2-1 3 1 3-3 2-3-1-3 1-3-2-1-3-2-2V9l3-2z"/><circle cx="12" cy="12" r="3"/>',backup:'<path d="M4 16v5h16v-5M12 3v12M7 8l5-5 5 5"/>',plus:'<path d="M12 5v14M5 12h14"/>',search:'<circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/>'};
 const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.info}</svg>`;
