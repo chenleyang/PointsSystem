@@ -4,7 +4,7 @@ const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 globalThis.crypto ||= require('node:crypto').webcrypto;
 const root = path.resolve(__dirname, '..');
-const types = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.mjs':'application/javascript; charset=utf-8'};
+const types = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'application/javascript; charset=utf-8','.mjs':'application/javascript; charset=utf-8','.png':'image/png','.jpg':'image/jpeg'};
 const folder=process.env.BACKUP_DATA_DIR?path.resolve(process.env.BACKUP_DATA_DIR):path.join(root,'.local-data');
 const backupFile=path.join(folder,'cloud-backup.json');
 const secret=process.env.SYNC_TOKEN || 'local-demo-sync-key-2026';
@@ -28,7 +28,7 @@ const repository={
         const response=await handleBackup(request,secret,repository);
         res.writeHead(response.status,Object.fromEntries(response.headers));return res.end(Buffer.from(await response.arrayBuffer()));
       }
-      const allowed={'/':'index.html','/index.html':'index.html','/style.css':'style.css','/mobile.css':'mobile.css','/app.js':'app.js','/cloud.js':'cloud.js','/validation.mjs':'validation.mjs'};
+      const allowed={'/':'index.html','/index.html':'index.html','/style.css':'style.css','/mobile.css':'mobile.css','/app.js':'app.js','/cloud.js':'cloud.js','/validation.mjs':'validation.mjs','/logoPng.png':'logoPng.png'};
       const name=allowed[url.pathname];
       if(!name){res.writeHead(404);return res.end('Not found');}
       res.writeHead(200,{'Content-Type':types[path.extname(name)],'Cache-Control':'no-store'});
